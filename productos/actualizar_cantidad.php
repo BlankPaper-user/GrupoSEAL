@@ -18,7 +18,11 @@ function sendJsonResponse($success, $message, $data = []) {
 }
 
 try {
-    
+    // Verificar si el usuario ha iniciado sesión
+    if (!isset($_SESSION["user_id"])) {
+        http_response_code(401);
+        sendJsonResponse(false, 'Sesión expirada. Por favor, inicie sesión nuevamente.');
+    }
 
     // Verificar si la solicitud es POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
